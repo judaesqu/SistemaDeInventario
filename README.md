@@ -1,2 +1,0 @@
-# SistemaDeInventario
-Practicas Sena
