@@ -4,6 +4,7 @@
     Author     : EspinosaBeltran
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,32 +17,33 @@
         <div class="d-flex">
          <div class="card col-sm-4">
             <div class="card-body">
-                <form>
+                <form action="Controlador?menu=Empleado" method="POST">
                     <div class="form-group">
                         <label>Nombre empleado</label>
-                        <input type="text" name="txtnombre" class="form-control">
+                        <input type="text" value="${empleado.getNombre_empleado()}" name="txtnombre" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Cargo</label>
-                        <input type="text" name="txtcargo" class="form-control">
+                        <input type="text" value="${empleado.getCargo()}" name="txtcargo" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Fecha Contratación</label>
-                        <input type="text" name="txtfecha" class="form-control">
+                        <input type="text" value="${empleado.getFecha_contratacion()}" name="txtfecha" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>User</label>
-                        <input type="text" name="txtuser" class="form-control">
+                        <input type="text" value="${empleado.getUser()}" name="txtuser" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="text" name="txtpass" class="form-control">
+                        <input type="password" value="${empleado.getPassword()}" name="txtpass" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="text" name="txtemail" class="form-control">
+                        <input type="text" value="${empleado.getEmail()}" name="txtemail" class="form-control">
                     </div>
                     <input type ="submit" name="accion" value="Agregar" class="btn btn-info">
+                    <input type ="submit" name="accion" value="Actualizar" class="btn btn-success">
                 </form>                
             </div>
         </div>   
@@ -54,20 +56,27 @@
                             <th>Cargo</th>
                             <th>Fecha Contrato</th>
                             <th>Usuario</th>
-                            <th>Password</th>
+                            <th style="display:none">Password</th>
                             <th>Correo</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <c:forEach var="em" items="${empleados}">
                         <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>${em.getID_empleado()}</td>
+                            <td>${em.getNombre_empleado()}</td>
+                            <td>${em.getCargo()}</td>
+                            <td>${em.getFecha_contratacion()}</td>
+                            <td>${em.getUser()}</td>
+                            <td style="display:none">${em.getPassword()}</td>
+                            <td>${em.getEmail()}</td>
+                            <td>
+                                <a class="btn btn-warning" href="Controlador?menu=Empleado&accion=Editar&id=${em.getID_empleado()}">Editar</a>
+                                <br>
+                                <a class="btn btn-danger" href="Controlador?menu=Empleado&accion=Delete&id=${em.getID_empleado()}">Delete</a>
+                            </td>
                         </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

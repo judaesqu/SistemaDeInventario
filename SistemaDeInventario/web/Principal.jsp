@@ -26,7 +26,7 @@
         <a style="margin-left: 10px; border:none" class="btn btn-outline-light" href="Controlador?menu=Clientes" target="myFrame">Clientes</a>
       </li>
       <li class="nav-item">
-        <a style="margin-left: 10px; border:none" class="btn btn-outline-light" href="Controlador?menu=Empleados" target="myFrame">Empleados</a>
+        <a style="margin-left: 10px; border:none" class="btn btn-outline-light" href="Controlador?menu=Empleado&accion=Listar" target="myFrame">Empleados</a>
       </li>
       <li class="nav-item">
         <a style="margin-left: 10px; border:none" class="btn btn-outline-light" href="Controlador?menu=Ordenes" target="myFrame">Órdenes</a>

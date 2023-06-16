@@ -5,8 +5,11 @@
  */
 package Controlador;
 
+import Modelo.Empleado;
+import Modelo.EmpleadoDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +30,9 @@ public class Controlador extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    Empleado em=new Empleado();
+    EmpleadoDAO edao=new EmpleadoDAO();
+    int ide;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             String menu=request.getParameter("menu");
@@ -34,26 +40,138 @@ public class Controlador extends HttpServlet {
             if(menu.equals("Principal")){
                 request.getRequestDispatcher("Principal.jsp").forward(request, response);
             }
-            if(menu.equals("Empleados")){
+            if(menu.equals("Empleado")){
+                switch (accion){
+                    case "Listar":
+                        List lista=edao.listar();
+                        request.setAttribute("empleados", lista);
+                        break;
+                    case "Agregar":
+                        String Nombre_empleado = request.getParameter("txtnombre");
+                        String Cargo = request.getParameter("txtcargo");
+                        String Fecha_contratacion = request.getParameter("txtfecha");
+                        String User = request.getParameter("txtuser");
+                        String Password = request.getParameter("txtpass");
+                        String Email = request.getParameter("txtemail");
+                        em.setNombre_empleado(Nombre_empleado);
+                        em.setCargo(Cargo);
+                        em.setFecha_contratacion(Fecha_contratacion);
+                        em.setUser(User);
+                        em.setPassword(Password);
+                        em.setEmail(Email);
+                        edao.agregar(em);
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                        break;
+                    case "Editar":
+                        ide=Integer.parseInt(request.getParameter("id"));
+                        Empleado e=edao.listarId(ide);
+                        request.setAttribute("empleado", e);
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                        break;
+                    case "Actualizar":
+                        String Nombre_empleado1 = request.getParameter("txtnombre");
+                        String Cargo1 = request.getParameter("txtcargo");
+                        String Fecha_contratacion1 = request.getParameter("txtfecha");
+                        String User1 = request.getParameter("txtuser");
+                        String Password1 = request.getParameter("txtpass");
+                        String Email1 = request.getParameter("txtemail");
+                        em.setNombre_empleado(Nombre_empleado1);
+                        em.setCargo(Cargo1);
+                        em.setFecha_contratacion(Fecha_contratacion1);
+                        em.setUser(User1);
+                        em.setPassword(Password1);
+                        em.setEmail(Email1);
+                        em.setID_empleado(ide);
+                        edao.actualizar(em);
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                        break;
+                    case "Delete":
+                        ide=Integer.parseInt(request.getParameter("id"));
+                        edao.delete(ide);
+                        request.getRequestDispatcher("Controlador?menu=Empleado&accion=Listar").forward(request, response);
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
                 request.getRequestDispatcher("Empleados.jsp").forward(request, response);
             }
             if(menu.equals("Clientes")){
                 request.getRequestDispatcher("Clientes.jsp").forward(request, response);
+                switch (accion){
+                    case "Listar":
+                        break;
+                    case "Agregar":
+                        break;
+                    case "Editar":
+                        break;
+                    case "Delete":
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
             }
             if(menu.equals("Catalogo")){
                 request.getRequestDispatcher("Catalogo.jsp").forward(request, response);
             }
             if(menu.equals("Ordenes")){
                 request.getRequestDispatcher("Ordenes.jsp").forward(request, response);
+                switch (accion){
+                    case "Listar":
+                        break;
+                    case "Agregar":
+                        break;
+                    case "Editar":
+                        break;
+                    case "Delete":
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
             }
             if(menu.equals("Productos")){
                 request.getRequestDispatcher("Productos.jsp").forward(request, response);
+                switch (accion){
+                    case "Listar":
+                        break;
+                    case "Agregar":
+                        break;
+                    case "Editar":
+                        break;
+                    case "Delete":
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
             }
             if(menu.equals("Transacciones")){
                 request.getRequestDispatcher("Transacciones.jsp").forward(request, response);
+                switch (accion){
+                    case "Listar":
+                        break;
+                    case "Agregar":
+                        break;
+                    case "Editar":
+                        break;
+                    case "Delete":
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
             }
             if(menu.equals("Proveedores")){
                 request.getRequestDispatcher("Proveedores.jsp").forward(request, response);
+                switch (accion){
+                    case "Listar":
+                        break;
+                    case "Agregar":
+                        break;
+                    case "Editar":
+                        break;
+                    case "Delete":
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
             }
      
     }
