@@ -4,6 +4,7 @@
     Author     : EspinosaBeltran
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,62 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Clientes</h1>
+        <body>
+        <div class="d-flex">
+         <div class="card col-sm-4">
+            <div class="card-body">
+                <form action="Controlador?menu=Cliente" method="POST">
+                    <div class="form-group">
+                        <label>Nombre cliente</label>
+                        <input type="text" value="${cliente.getNombre_cliente()}" name="txtnombre" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" value="${cliente.getDireccion()}" name="txtdireccion" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefono</label>
+                        <input type="text" value="${cliente.getTelefono()}" name="txttelefono" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" value="${cliente.getCorreo_electronico()}" name="txtemail" class="form-control">
+                    </div>
+                    <input type ="submit" name="accion" value="Agregar" class="btn btn-info">
+                    <input type ="submit" name="accion" value="Actualizar" class="btn btn-success">
+                </form>                
+            </div>
+        </div>   
+            <div class="col-sm-8">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Dirección</th>
+                            <th>Telefono</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="c" items="${clientes}">
+                        <tr>
+                            <td>${c.getID_cliente()}</td>
+                            <td>${c.getNombre_cliente()}</td>
+                            <td>${c.getDireccion()}</td>
+                            <td>${c.getTelefono()}</td>
+                            <td>${c.getCorreo_electronico()}</td>
+                            <td>
+                                <a class="btn btn-warning" href="Controlador?menu=Cliente&accion=Editar&id=${c.getID_cliente()}">Editar</a>
+                                <br>
+                                <a class="btn btn-danger" href="Controlador?menu=Cliente&accion=Delete&id=${c.getID_cliente()}">Delete</a>
+                            </td>
+                        </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
