@@ -35,7 +35,7 @@
         <a style="margin-left: 10px; border:none" class="btn btn-outline-light" href="Controlador?menu=Productos" target="myFrame">Productos</a>
       </li>
       <li class="nav-item">
-        <a style="margin-left: 10px; border:none" class="btn btn-outline-light" href="Controlador?menu=Proveedores" target="myFrame">Proveedores</a>
+        <a style="margin-left: 10px; border:none" class="btn btn-outline-light" href="Controlador?menu=Proveedor&accion=Listar" target="myFrame">Proveedores</a>
       </li>
       <li class="nav-item">
         <a style="margin-left: 10px; border:none" class="btn btn-outline-light" href="Controlador?menu=Transacciones" target="myFrame">Transacciones</a>

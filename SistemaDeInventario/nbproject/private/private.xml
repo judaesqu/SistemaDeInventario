@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/web/Proveedores.jsp</file>
             <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/src/java/Controlador/Controlador.java</file>
-            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/web/Empleados.jsp</file>
-            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/src/java/Controlador/Validar.java</file>
-            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/src/java/Modelo/Empleado.java</file>
-            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/src/java/Modelo/EmpleadoDAO.java</file>
+            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/src/java/Modelo/Cliente.java</file>
+            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/src/java/Modelo/ProveedorDAO.java</file>
+            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/src/java/Modelo/ClienteDAO.java</file>
+            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/web/Clientes.jsp</file>
+            <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/src/java/Modelo/Proveedor.java</file>
             <file>file:/C:/Users/monic/Documents/SistemaDeInventario-main/SistemaDeInventario-main/SistemaDeInventario/web/Principal.jsp</file>
         </group>
     </open-files>

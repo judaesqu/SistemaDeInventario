@@ -9,6 +9,8 @@ import Modelo.Cliente;
 import Modelo.ClienteDAO;
 import Modelo.Empleado;
 import Modelo.EmpleadoDAO;
+import Modelo.Proveedor;
+import Modelo.ProveedorDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -36,8 +38,11 @@ public class Controlador extends HttpServlet {
     EmpleadoDAO edao=new EmpleadoDAO();
     Cliente c =new Cliente();
     ClienteDAO cdao=new ClienteDAO();
+    Proveedor pr = new Proveedor();
+    ProveedorDAO pdao=new ProveedorDAO();
     int ide;
     int idc;
+    int idp;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             String menu=request.getParameter("menu");
@@ -195,20 +200,53 @@ public class Controlador extends HttpServlet {
                         throw new AssertionError();
                 }
             }
-            if(menu.equals("Proveedores")){
-                request.getRequestDispatcher("Proveedores.jsp").forward(request, response);
+            if(menu.equals("Proveedor")){
                 switch (accion){
                     case "Listar":
+                        List lista=pdao.listar();
+                        request.setAttribute("proveedores", lista);
                         break;
                     case "Agregar":
+                        String Nombre_proveedor = request.getParameter("txtnombre");
+                        String NIT = request.getParameter("txtnit");
+                        String Direccion = request.getParameter("txtdireccion");
+                        String Nombre_contacto = request.getParameter("txtcontacto");
+                        String Telefono = request.getParameter ("txttelefono");
+                        String Correo_electronico = request.getParameter ("txtemail");
+                        String Forma_de_pago = request.getParameter ("txtforma");
+                        String Medio_de_pago = request.getParameter ("txtmedio");
+                        String Numero_de_cuenta = request.getParameter ("txtcuenta");
+                        String Banco = request.getParameter ("txtbanco");
+                        String Plazo_pago = request.getParameter ("txtplazo");
+                        pr.setNombre_proveedor(Nombre_proveedor);
+                        pr.setNIT(NIT);
+                        pr.setDireccion(Direccion);
+                        pr.setNombre_contacto(Nombre_contacto);
+                        pr.setTelefono(Telefono);
+                        pr.setCorreo_electronico(Correo_electronico);
+                        pr.setForma_de_pago(Forma_de_pago);
+                        pr.setMedio_de_pago(Medio_de_pago);
+                        pr.setNumero_de_cuenta(Numero_de_cuenta);
+                        pr.setBanco(Banco);
+                        pr.setPlazo_pago(Plazo_pago);
+                        pdao.agregar(pr);
+                        request.getRequestDispatcher("Controlador?menu=Proveedor&accion=Listar").forward(request, response);
                         break;
                     case "Editar":
+                        idp=Integer.parseInt(request.getParameter("id"));
+                        Proveedor pro=pdao.listarId(idp);
+                        request.setAttribute("proveedor", pro);
+                        request.getRequestDispatcher("Controlador?menu=Proveedor&accion=Listar").forward(request, response);
                         break;
                     case "Delete":
+                        idp=Integer.parseInt(request.getParameter("id"));
+                        pdao.delete(idp);
+                        request.getRequestDispatcher("Controlador?menu=Proveedor&accion=Listar").forward(request, response);
                         break;
                     default:
                         throw new AssertionError();
                 }
+                request.getRequestDispatcher("Proveedores.jsp").forward(request, response);
             }
      
     }
