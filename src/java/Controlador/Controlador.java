@@ -12,6 +12,8 @@ import Modelo.EmpleadoDAO;
 import Modelo.Producto;
 import Modelo.ProductoDAO;
 import Modelo.Venta;
+import Modelo.VentaDAO;
+import config.GenerarSerie;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -50,6 +52,9 @@ public class Controlador extends HttpServlet {
     int cantidad;
     double subtotal;
     double totalPagar;
+    
+    String numeroserie;
+    VentaDAO vdao=new VentaDAO();
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -249,6 +254,17 @@ public class Controlador extends HttpServlet {
 			request.setAttribute("lista", lista);
 			break;
   		default:
+		    numeroserie = vdao.GenerarSerie();
+		    if(numeroserie==null){
+			numeroserie="00000001";
+			request.setAttribute("nserie", numeroserie);
+		    }
+		    else{
+			int incrementar = Integer.parseInt(numeroserie);
+			GenerarSerie gs = new GenerarSerie();
+			numeroserie = gs.NumeroSerie(incrementar);
+			request.setAttribute("nserie", numeroserie);
+		    }
 		    break;
 	    }
             request.getRequestDispatcher("RegistrarVenta.jsp").forward(request, response);
