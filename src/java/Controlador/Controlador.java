@@ -11,9 +11,11 @@ import Modelo.Empleado;
 import Modelo.EmpleadoDAO;
 import Modelo.Producto;
 import Modelo.ProductoDAO;
+import Modelo.Venta;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +39,17 @@ public class Controlador extends HttpServlet {
     int ide;
     int idp;
     int idc;
+    
+    
+    Venta v = new Venta();
+    List <Venta>lista=new ArrayList<>();
+    int item;
+    int codigo;
+    String descripcion;
+    double precio;
+    int cantidad;
+    double subtotal;
+    double totalPagar;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
@@ -205,8 +218,36 @@ public class Controlador extends HttpServlet {
 		    case "BuscarProducto":
 		    int id = Integer.parseInt(request.getParameter("codigoproducto"));
 		    p = pdao.listarId(id);
+		    request.setAttribute("c", c);
 		    request.setAttribute("producto", p);
+		    request.setAttribute("lista", lista);
+		    request.setAttribute("totalpagar", totalPagar);
 		    break;
+		    
+		    case "Agregar":
+			request.setAttribute("c", c);
+			totalPagar = 0.0;
+			item = item+1;
+			codigo = p.getId();
+			descripcion = request.getParameter("nombreproducto");
+			precio=Double.parseDouble(request.getParameter("precio"));
+			cantidad=Integer.parseInt(request.getParameter("cant"));
+			subtotal=precio*cantidad;
+			
+			v = new Venta();
+			v.setItem(item);
+			v.setId(codigo);
+			v.setDescripcionP(descripcion);
+			v.setPrecio(precio);
+			v.setCantidad(cantidad);
+			v.setSubtotal(subtotal);
+			lista.add(v);
+			for(int i = 0; i < lista.size(); i++){
+			totalPagar = totalPagar + lista.get(i).getSubtotal();
+		    }
+			request.setAttribute("totalpagar", totalPagar);
+			request.setAttribute("lista", lista);
+			break;
   		default:
 		    break;
 	    }

@@ -4,6 +4,7 @@
     Author     : Espinosa Beltran
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -82,22 +83,30 @@
 				</tr>
 			    </thead>
 			    <tbody>
+				<c:forEach var="lista" items="${lista}">
 				<tr>
-				    <td></td>
-				    <td></td>
-				    <td></td>
-				    <td></td>
-				    <td></td>
-				    <td></td>
-				    <td></td>
+				    <td>${lista.getItem()}</td>
+				    <td>${lista.getIdproducto()}</td>
+				    <td>${lista.getDescripcionP()}</td>
+				    <td>${lista.getPrecio()}</td>
+				    <td>${lista.getCantidad()}</td>
+				    <td>${lista.getSubtotal()}</td>
+				    <td class="d-flex">
+					<a href="#" class="btn btn-warning">Editar</a>
+					<a href="#" class="btn btn-danger" style="margin-left: 10px">Delete</a>
+				    </td>
 				</tr>
+			    </c:forEach>
 			    </tbody>
 			</table>
 	    </div>
-		    <div class="card-footer">
-			<div>
+		    <div class="card-footer d-flex">
+			<div class="col-sm-6">
 			    <input type="submit" name="accion" value="Generar Venta" class="btn btn-success">
 			    <input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
+			</div>
+			<div class="col-sm-4 ml-auto">
+			    <input type="text" name="txtTotal" value="$${totalpagar}" class="form-control">
 			</div>
 		    </div>
 	</div>
