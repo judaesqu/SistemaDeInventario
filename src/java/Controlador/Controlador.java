@@ -223,6 +223,8 @@ public class Controlador extends HttpServlet {
 		    case "BuscarProducto":
 		    int id = Integer.parseInt(request.getParameter("codigoproducto"));
 		    p = pdao.listarId(id);
+		    p.setId(id);
+		    request.setAttribute("producto", p);
 		    request.setAttribute("c", c);
 		    request.setAttribute("producto", p);
 		    request.setAttribute("lista", lista);
@@ -238,10 +240,9 @@ public class Controlador extends HttpServlet {
 			precio=Double.parseDouble(request.getParameter("precio"));
 			cantidad=Integer.parseInt(request.getParameter("cant"));
 			subtotal=precio*cantidad;
-			
 			v = new Venta();
 			v.setItem(item);
-			v.setId(codigo);
+			v.setIdproducto(codigo);
 			v.setDescripcionP(descripcion);
 			v.setPrecio(precio);
 			v.setCantidad(cantidad);
@@ -253,7 +254,42 @@ public class Controlador extends HttpServlet {
 			request.setAttribute("totalpagar", totalPagar);
 			request.setAttribute("lista", lista);
 			break;
+			
+		    case "GenerarVenta":
+			
+		      
+		    //Para guardar la venta
+		    v.setIdcliente(c.getId());
+		    v.setIdempleado(8);
+		    v.setNumserie(numeroserie);
+		    v.setFecha("2023-12-31");
+		    v.setMonto(totalPagar);
+		    v.setEstado("1");
+		    vdao.guardarVenta(v);
+		    
+		    //Guardar el detalle de la venta
+		    int idv = 0;
+		    String idventas = vdao.IdVentas();
+		    try{
+			idv = idventas.isEmpty() ? 0: Integer.parseInt(idventas);
+		    }catch(NumberFormatException e){
+			throw new RuntimeException("Error al obtener el ID de la venta", e);
+		    }
+			
+		    for (int i = 0; i < lista.size(); i++){
+			Venta v = new Venta();
+			v.setId(idv);
+			v.setIdproducto(lista.get(i).getIdproducto());
+			v.setCantidad(lista.get(i).getCantidad());
+			v.setPrecio(lista.get(i).getPrecio());
+			vdao.guardarDetalleventas(v);
+			
+		    }
+		    
+		    break;
+	    
   		default:
+		    
 		    numeroserie = vdao.GenerarSerie();
 		    if(numeroserie==null){
 			numeroserie="00000001";
@@ -337,6 +373,9 @@ public class Controlador extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    
     }
+    
 
 

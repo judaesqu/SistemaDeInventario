@@ -21,15 +21,14 @@ public class Venta {
     Double precio;
     Integer cantidad;
     Double subtotal;
-    Double totalPagar;
     Double monto;
     String estado;
     
     public Venta(){
 	
     }
-    
-    public Venta(Integer id, Integer item, Integer idcliente, Integer idempleado, Integer idproducto, String Numserie, String DescripcionP, String fecha, Double precio, Integer cantidad, Double subtotal, Double totalpagar, Double monto, String estado){
+
+    public Venta(Integer id, Integer item, Integer idcliente, Integer idempleado, Integer idproducto, String Numserie, String DescripcionP, String fecha, Double precio, Integer cantidad, Double subtotal, Double monto, String estado) {
 	this.id = id;
 	this.item = item;
 	this.idcliente = idcliente;
@@ -41,7 +40,6 @@ public class Venta {
 	this.precio = precio;
 	this.cantidad = cantidad;
 	this.subtotal = subtotal;
-	this.totalPagar = totalpagar;
 	this.monto = monto;
 	this.estado = estado;
     }
@@ -134,14 +132,6 @@ public class Venta {
 	this.subtotal = subtotal;
     }
 
-    public Double getTotalPagar() {
-	return totalPagar;
-    }
-
-    public void setTotalPagar(Double totalPagar) {
-	this.totalPagar = totalPagar;
-    }
-
     public Double getMonto() {
 	return monto;
     }
@@ -157,9 +147,8 @@ public class Venta {
     public void setEstado(String estado) {
 	this.estado = estado;
     }
-
     
     
     
-	    
+    
 }

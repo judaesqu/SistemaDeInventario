@@ -38,7 +38,7 @@
 			</div>
 			<div class="form-group d-flex">
 			    <div class="col-sm-6 d-flex">
-				<input type="text" name="codigoproducto" value="${producto.getId()}" class="form-control" placeholder="Producto">
+				<input type="text" name="codigoproducto" value="${producto.getId()}" class="form-control col-sm-4" placeholder="Producto">
 				<Button type ="submit" name ="accion" value="BuscarProducto" class="btn btn-outline-info">Buscar</button>
 			    </div>
 			    <div class="col-sm-6">
@@ -79,7 +79,7 @@
 				    <th>Precio</th>
 				    <th>Cantidad</th>
 				    <th>SubTotal</th>
-				    <th>Acciones</th>
+				    <th class="accion">Acciones</th>
 				</tr>
 			    </thead>
 			    <tbody>
@@ -102,7 +102,7 @@
 	    </div>
 		    <div class="card-footer d-flex">
 			<div class="col-sm-6">
-			    <input type="submit" name="accion" value="Generar Venta" class="btn btn-success">
+			    <a href="Controlador?menu=NuevaVenta&accion=GenerarVenta" class="btn btn-success" type="submit">Generar Venta</a>
 			    <input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
 			</div>
 			<div class="col-sm-4 ml-auto">
