@@ -19,6 +19,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -73,7 +74,7 @@ public class Controlador extends HttpServlet {
                 case "Agregar":
                     String Nombres=request.getParameter("txtNombre");
                     String Precio=request.getParameter("txtPrecio");
-                    String Stock=request.getParameter("txtStock");
+                    int Stock=Integer.parseInt(request.getParameter("txtStock"));
                     String Estado = request.getParameter("txtEstado");
                     p.setNombres(Nombres);
                     p.setPrecio(Precio);
@@ -91,7 +92,7 @@ public class Controlador extends HttpServlet {
                 case "Actualizar":
                     String Nombres1=request.getParameter("txtNombre");
                     String Precio1=request.getParameter("txtPrecio");
-                    String Stock1=request.getParameter("txtStock");
+                    int Stock1=Integer.parseInt(request.getParameter("txtStock"));
                     String Estado1=request.getParameter("txtEstado");
                     p.setNombres(Nombres1);
                     p.setPrecio(Precio1);
@@ -256,7 +257,25 @@ public class Controlador extends HttpServlet {
 			break;
 			
 		    case "GenerarVenta":
+			//Actualizar el Stock
+			ProductoDAO aO = new ProductoDAO();
 			
+			for(int i=0; i < lista.size(); i++){
+			    int cantidadProducto = (int) lista.get(i).getCantidad();
+			    int idproducto = lista.get(i).getIdproducto();
+			    			    
+			    Producto producto = aO.buscar(idproducto);
+			    
+			    if (producto != null){
+				int nuevoStock = producto.getStock() - cantidadProducto;
+				
+				if (nuevoStock >= 0){
+				    aO.actualizarstock(idproducto, nuevoStock);
+				}else{
+				    System.out.println("No se puede actualizar el stock del producto con ID" + idproducto);
+				}
+			    }
+			}
 		      
 		    //Para guardar la venta
 		    v.setIdcliente(c.getId());

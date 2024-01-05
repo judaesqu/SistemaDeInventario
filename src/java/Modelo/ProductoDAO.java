@@ -35,7 +35,7 @@ public class ProductoDAO {
 		p.setId(rs.getInt(1));
 		p.setNombres(rs.getString(2));
 		p.setPrecio(rs.getString(3));
-		p.setStock(rs.getString(4));
+		p.setStock(rs.getInt(4));
 		p.setEstado(rs.getString(5));		
 	    }
 	}catch (Exception e){
@@ -69,7 +69,7 @@ public class ProductoDAO {
 		pr.setId(rs.getInt(1));
 		pr.setNombres(rs.getString(2));
 		pr.setPrecio(rs.getString(3));
-		pr.setStock(rs.getString(4));
+		pr.setStock(rs.getInt(4));
 		pr.setEstado(rs.getString(5));
 		lista.add(pr);
 	    }
@@ -84,7 +84,7 @@ public class ProductoDAO {
 	    ps=con.prepareStatement(sql);
 	    ps.setString(1, pr.getNombres());
 	    ps.setString(2, pr.getPrecio());
-	    ps.setString(3, pr.getStock());
+	    ps.setInt(3, pr.getStock());
 	    ps.setString(4, pr.getEstado());
 	    ps.executeUpdate();
 	}catch (Exception e){
@@ -102,7 +102,7 @@ public class ProductoDAO {
 	    while(rs.next()){
 		pro.setNombres(rs.getString(2));
 		pro.setPrecio(rs.getString(3));
-		pro.setStock(rs.getString(4));
+		pro.setStock(rs.getInt(4));
 		pro.setEstado(rs.getString(5));
 	    }
 	}catch (Exception e){
@@ -117,7 +117,7 @@ public class ProductoDAO {
 	    ps=con.prepareStatement(sql);
 	    ps.setString(1, pr.getNombres());
 	    ps.setString(2, pr.getPrecio());
-	    ps.setString(3, pr.getStock());
+	    ps.setInt(3, pr.getStock());
 	    ps.setString(4, pr.getEstado());
 	    ps.setInt(5, pr.getId());
 	    ps.executeUpdate();
