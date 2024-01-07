@@ -98,6 +98,7 @@ public class ClienteDAO {
     }
     
     public int actualizar(Cliente cl){
+	int filasAfectadas = 0;
 	String sql = "UPDATE cliente SET CC=?, Nombres=?, Direccion=?, Estado=? WHERE IdCliente=?";
 	try{
 	    con=cn.Conexion();
@@ -106,8 +107,21 @@ public class ClienteDAO {
 	    ps.setString(2, cl.getNombres());
 	    ps.setString(3, cl.getDireccion());
 	    ps.setString(4, cl.getEstado());
-	    ps.executeUpdate();
+	    ps.setInt(5, cl.getId());
+	    filasAfectadas = ps.executeUpdate();
 	}catch (Exception e){
+	     e.printStackTrace();
+	}finally{
+	    try {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+	}catch (Exception e){
+	     e.printStackTrace();
+	}
 	}
 	return r;
     }

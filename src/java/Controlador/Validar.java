@@ -90,13 +90,19 @@ public class Validar extends HttpServlet {
                 request.setAttribute("usuario", em);
                 request.getRequestDispatcher("Controlador?menu=Principal").forward(request, response);
             }else{
+		PrintWriter out = response.getWriter();
+		out.println("<script>");
+		out.println("alert('Usuario o Contraseña incorrecta');");
+		out.println("window.location.href='index.jsp';");
+		out.println("</script>");
+	    }
+	}
+	else{
                 request.getRequestDispatcher("index.jsp").forward(request, response);
             }
         }
-        else{
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-    }
-    }
+        
+    
 
     /**
      * Returns a short description of the servlet.
