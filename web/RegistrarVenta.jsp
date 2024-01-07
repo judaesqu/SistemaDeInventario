@@ -10,6 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>VENTAS</title>
     </head>
@@ -70,31 +71,25 @@
 			    <label>Nro. Serie:</label>
 			    <input type="text" name="NroSerie" value="${nserie}" class="form-control">
 			</div>
-			<table class="table table-hover">
+			<table class="table table-hover" id="tablaProductos">
 			    <thead>
-				<tr>
 				    <th>Nro</th>
 				    <th>Código</th>
 				    <th>Descripción</th>
 				    <th>Precio</th>
 				    <th>Cantidad</th>
 				    <th>SubTotal</th>
-				    <th class="accion">Acciones</th>
 				</tr>
 			    </thead>
 			    <tbody>
-				<c:forEach var="lista" items="${lista}">
-				<tr>
+				<c:forEach var="lista" items="${lista}" varStatus="status">
+				    <tr data-idproducto="${lista.getIdproducto()}">
 				    <td>${lista.getItem()}</td>
 				    <td>${lista.getIdproducto()}</td>
 				    <td>${lista.getDescripcionP()}</td>
 				    <td>${lista.getPrecio()}</td>
 				    <td>${lista.getCantidad()}</td>
 				    <td>${lista.getSubtotal()}</td>
-				    <td class="d-flex">
-					<a href="#" class="btn btn-warning">Editar</a>
-					<a href="#" class="btn btn-danger" style="margin-left: 10px">Delete</a>
-				    </td>
 				</tr>
 			    </c:forEach>
 			    </tbody>
@@ -112,5 +107,33 @@
 	</div>
 	    </div>
 	</div>
+			<% 
+			    //Verificamos si la venta fue exitosa
+			    Boolean compraExitosa = (Boolean) request.getAttribute("compraExitosa");
+			    if(compraExitosa != null && compraExitosa){
+				%>
+				
+				<script type="text/javascript">
+				    alert("La venta fue satisfactoria");
+				    </script>
+				    
+			<%
+			    }
+			%>
+			
+			<script>
+    $(document).ready(function () {
+             
+        // Evento de click para el botón "Cancelar"
+        $('input[name="accion"][value="Cancelar"]').on('click', function () {
+            // Lógica para limpiar la tabla
+            $('#tablaProductos tbody').empty();
+	    $('input[name="txtTotal"]').val('$0.00');
+            console.log("Cancelar y limpiar la tabla");
+        });
+    });
+</script>
+
+
     </body>
 </html>

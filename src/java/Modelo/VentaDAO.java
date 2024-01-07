@@ -36,9 +36,23 @@ public class VentaDAO {
 		numeroserie=rs.getString(1);
 	    }
 	}catch (Exception e){
+	    System.err.println("Error al obtener el número de serie: "+e.getMessage());
 	}
 	
-	return numeroserie;
+	//Incrementar el numero de serie
+	int nuevoNumeroSerie = 1;
+	
+	if(numeroserie !=null && !numeroserie.isEmpty()){
+	    nuevoNumeroSerie = Integer.parseInt(numeroserie)+1;
+	}
+	
+	//Formateamos el nuevo numero de serie para que tenga 8 digitos
+	String nuevoNumeroSerieFormateado = String.format("%08d",nuevoNumeroSerie);
+	
+	//Actualizar el último número de serie en la base de datos
+	actualizarUltimoNumeroSerieEnBD(nuevoNumeroSerieFormateado);
+	
+	return nuevoNumeroSerieFormateado;
     }
     
     public String IdVentas() {
@@ -59,6 +73,30 @@ public class VentaDAO {
 
     return idventas;
 }
+    
+    private void actualizarUltimoNumeroSerieEnBD(String nuevoNumeroSerie) throws SQLException{
+	String ultimoIdVentas = IdVentas();
+	
+	if(ultimoIdVentas != null){
+	    try{
+	    int idVentas = Integer.parseInt(ultimoIdVentas);
+	    String sql = "UPDATE ventas SET NumeroSerie = ? WHERE IdVentas = ?";
+	    
+	    con = cn.Conexion();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, nuevoNumeroSerie);
+            ps.setInt(2, idVentas);
+            ps.executeUpdate();
+        } catch (NumberFormatException | SQLException e) {
+            System.err.println("Error al actualizar el número de serie en la base de datos: " + e.getMessage());
+        }
+    } else {
+        System.err.println("No se pudo obtener el último IdVentas.");
+    }
+}
+	
+    
+    
     
     public int guardarVenta(Venta ve){
 	String sql = "INSERT INTO ventas (IdCliente, IdEmpleado, NumeroSerie, FechaVentas, Monto, Estado) VALUES (?,?,?,?,?,?)";

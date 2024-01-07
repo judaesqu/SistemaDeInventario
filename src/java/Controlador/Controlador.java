@@ -17,6 +17,8 @@ import config.GenerarSerie;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -261,12 +264,17 @@ public class Controlador extends HttpServlet {
 			ProductoDAO aO = new ProductoDAO();
 			
 			for(int i=0; i < lista.size(); i++){
+			    
+			    //Se obtiene la cantidad del producto a vender
 			    int cantidadProducto = (int) lista.get(i).getCantidad();
+			    //Se obtiene el ID del producto
 			    int idproducto = lista.get(i).getIdproducto();
-			    			    
+			    // Se realiza la busqueda del producto en la base de datos			    
 			    Producto producto = aO.buscar(idproducto);
 			    
+			    //Si el producto existe se realiza el siguiente proceso
 			    if (producto != null){
+				//Se calcula el nuevo stock
 				int nuevoStock = producto.getStock() - cantidadProducto;
 				
 				if (nuevoStock >= 0){
@@ -276,12 +284,17 @@ public class Controlador extends HttpServlet {
 				}
 			    }
 			}
+			
+			LocalDate fechaActual = LocalDate.now();
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			String fechaActualFormateada = fechaActual.format(formatter);
 		      
 		    //Para guardar la venta
 		    v.setIdcliente(c.getId());
 		    v.setIdempleado(8);
 		    v.setNumserie(numeroserie);
-		    v.setFecha("2023-12-31");
+		    v.setFecha(fechaActualFormateada);
 		    v.setMonto(totalPagar);
 		    v.setEstado("1");
 		    vdao.guardarVenta(v);
@@ -302,9 +315,15 @@ public class Controlador extends HttpServlet {
 			v.setCantidad(lista.get(i).getCantidad());
 			v.setPrecio(lista.get(i).getPrecio());
 			vdao.guardarDetalleventas(v);
-			
 		    }
 		    
+		    //Limpiar la lista y reiniciar el contador de total a pagar
+		    lista.clear();
+		    totalPagar = 0.0;
+		    
+		   //Indicar que la compra fue exitosa
+		   request.setAttribute("compraExitosa", true);
+		   
 		    break;
 	    
   		default:
