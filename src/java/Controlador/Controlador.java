@@ -28,6 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 /**
@@ -251,6 +252,7 @@ public class Controlador extends HttpServlet {
 			v.setPrecio(precio);
 			v.setCantidad(cantidad);
 			v.setSubtotal(subtotal);
+			lista.clear();
 			lista.add(v);
 			for(int i = 0; i < lista.size(); i++){
 			totalPagar = totalPagar + lista.get(i).getSubtotal();
@@ -318,9 +320,13 @@ public class Controlador extends HttpServlet {
 		    }
 		    
 		    //Limpiar la lista y reiniciar el contador de total a pagar
+		    case "LimpiarLista":
 		    lista.clear();
 		    totalPagar = 0.0;
+		    response.getWriter().write("Lista limpiada exitosamente");
 		    
+		    
+		    		    
 		   //Indicar que la compra fue exitosa
 		   request.setAttribute("compraExitosa", true);
 		   
@@ -337,6 +343,8 @@ public class Controlador extends HttpServlet {
 			int incrementar = Integer.parseInt(numeroserie);
 			GenerarSerie gs = new GenerarSerie();
 			numeroserie = gs.NumeroSerie(incrementar);
+			HttpSession session = request.getSession();
+			session.setAttribute("numeroserie", numeroserie);
 			request.setAttribute("nserie", numeroserie);
 		    }
 		    break;

@@ -13,10 +13,17 @@
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <title>VENTAS</title>
+	<style>
+	    @media print{
+		.parte01, .btn{
+		    display:none;
+		}
+	    }
+	</style>
     </head>
     <body>
         <div class="d-flex">
-	    <div class="col-sm-5">
+	    <div class="col-sm-5 parte01">
 		<div class="card">
 		    <form action="Controlador?menu=NuevaVenta" method="POST">
 		    <div class="card-body">
@@ -69,8 +76,9 @@
 		    <div class="card-body">
 			<div class="d-flex col-sm-5 ml-auto">
 			    <label>Nro. Serie:</label>
-			    <input type="text" name="NroSerie" value="${nserie}" class="form-control">
+				<input type="text" name="NroSerie" value="${sessionScope.numeroserie}" class="form-control">
 			</div>
+			
 			<table class="table table-hover" id="tablaProductos">
 			    <thead>
 				    <th>Nro</th>
@@ -82,6 +90,7 @@
 				</tr>
 			    </thead>
 			    <tbody>
+				
 				<c:forEach var="lista" items="${lista}" varStatus="status">
 				    <tr data-idproducto="${lista.getIdproducto()}">
 				    <td>${lista.getItem()}</td>
@@ -93,11 +102,14 @@
 				</tr>
 			    </c:forEach>
 			    </tbody>
+			    
 			</table>
+			
 	    </div>
 		    <div class="card-footer d-flex">
 			<div class="col-sm-6">
-			    <a href="Controlador?menu=NuevaVenta&accion=GenerarVenta" class="btn btn-success" type="submit">Generar Venta</a>
+			    <a href="Controlador?menu=NuevaVenta&accion=GenerarVenta" onclick="print()" class="btn btn-success" type="submit">
+				Generar Venta <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM176 256a112 112 0 1 1 224 0 112 112 0 1 1 -224 0zm76-48c0 9.7 6.9 17.7 16 19.6V276h-4c-11 0-20 9-20 20s9 20 20 20h24 24c11 0 20-9 20-20s-9-20-20-20h-4V208c0-11-9-20-20-20H272c-11 0-20 9-20 20z"/></svg> </a>
 			    <input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
 			</div>
 			<div class="col-sm-4 ml-auto">
@@ -126,13 +138,27 @@
              
         // Evento de click para el botón "Cancelar"
         $('input[name="accion"][value="Cancelar"]').on('click', function () {
-            // Lógica para limpiar la tabla
-            $('#tablaProductos tbody').empty();
-	    $('input[name="txtTotal"]').val('$0.00');
-            console.log("Cancelar y limpiar la tabla");
+            $.ajax({
+                type: "POST",
+                url: "Controlador?menu=NuevaVenta&accion=LimpiarLista",
+                success: function (response) {
+                    // Actualizar la vista o realizar otras acciones necesarias
+                    $('#tablaProductos tbody').empty();
+                    $('input[name="txtTotal"]').val('$0.00');
+                    console.log("Cancelar y limpiar la tabla");
+                },
+                error: function (xhr, status, error) {
+                    // Manejar errores si es necesario
+                    console.error("Error en la solicitud AJAX:", status, error);
+                }
+            });
+
+            return false;
         });
     });
 </script>
+
+
 
 
     </body>
